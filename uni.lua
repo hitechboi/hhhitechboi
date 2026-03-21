@@ -42,9 +42,9 @@ elseif _0xGID==_0x00(73885730)then
         for _,o in ipairs(dObjs)do pcall(function()o:Remove()end)end
         table.clear(dObjs)
     end
-    local CW,CH=340,180
+    local CW,CH=300,160
     local scx,scy=flr(sx/2),flr(sy/2)
-    local r=8
+    local r=6
     local bgS1=mk("Square",{Position=v2(scx,scy),Size=v2(0,0),Color=cardCol,Filled=true,Transparency=0,ZIndex=50,Visible=true})
     local bgS2=mk("Square",{Position=v2(scx,scy),Size=v2(0,0),Color=cardCol,Filled=true,Transparency=0,ZIndex=50,Visible=true})
     local bgC1=mk("Circle",{Position=v2(scx,scy),Radius=1,Color=cardCol,Filled=true,Transparency=0,NumSides=24,ZIndex=50,Visible=true})
@@ -72,22 +72,22 @@ elseif _0xGID==_0x00(73885730)then
     end
     local slideOff=20
     local titleParts={
-        {txt="Check",col=whiteCol,sz=22,bx=scx-56,by=scy-60},
-        {txt=".",col=borderCol,sz=16,bx=scx+2,by=scy-60},
-        {txt="It",col=accentCol,sz=22,bx=scx+12,by=scy-60},
+        {txt="Check",col=whiteCol,sz=22,bx=scx-45,by=scy-52},
+        {txt=".",col=borderCol,sz=16,bx=scx+13,by=scy-52},
+        {txt="It",col=accentCol,sz=22,bx=scx+23,by=scy-52},
     }
     local contentItems={}
     for _,p in ipairs(titleParts)do
         local o=mk("Text",{Text=p.txt,Position=v2(p.bx,p.by+slideOff),Color=p.col,Size=p.sz,Font=FNTB,Center=false,Outline=false,Transparency=0,ZIndex=52,Visible=true})
         table.insert(contentItems,{obj=o,bx=p.bx,by=p.by,delay=0})
     end
-    local subObj=mk("Text",{Text="select version",Position=v2(scx,scy-30+slideOff),Color=grayCol,Size=12,Font=FNT,Center=true,Outline=false,Transparency=0,ZIndex=52,Visible=true})
-    table.insert(contentItems,{obj=subObj,bx=scx,by=scy-30,delay=0.06})
-    local BW,BH=130,44
-    local bGap=20
+    local subObj=mk("Text",{Text="select version",Position=v2(scx,scy-24+slideOff),Color=grayCol,Size=12,Font=FNT,Center=true,Outline=false,Transparency=0,ZIndex=52,Visible=true})
+    table.insert(contentItems,{obj=subObj,bx=scx,by=scy-24,delay=0.06})
+    local BW,BH=115,40
+    local bGap=16
     local b1x=scx-BW-flr(bGap/2)
     local b2x=scx+flr(bGap/2)
-    local bby=scy-2
+    local bby=scy+2
     local function mkBtn(bx,by,label,defCol,delay)
         local bs1=mk("Square",{Position=v2(bx+6,by+slideOff),Size=v2(BW-12,BH),Color=btnBg,Filled=true,Transparency=0,ZIndex=52,Visible=true})
         local bs2=mk("Square",{Position=v2(bx,by+6+slideOff),Size=v2(BW,BH-12),Color=btnBg,Filled=true,Transparency=0,ZIndex=52,Visible=true})
@@ -103,7 +103,7 @@ elseif _0xGID==_0x00(73885730)then
         end
         return b
     end
-    local btn2=mkBtn(b1x,bby,"Load v2",accentCol,0.12)
+    local btn2=mkBtn(b1x,bby,"Load v2",whiteCol,0.12)
     local btn1=mkBtn(b2x,bby,"Load v1",grayCol,0.18)
     local function layoutBtn(b,sc)
         local w=flr(b.baseW*sc)
@@ -188,6 +188,11 @@ elseif _0xGID==_0x00(73885730)then
     end
     layoutBtn(btn2,1)
     layoutBtn(btn1,1)
+    setBtnCol(btn2,btnBg)
+    setBtnCol(btn1,btnBg)
+    btn2.lblT=0;btn1.lblT=0
+    pcall(function()btn2.lbl.Color=btn2.defCol end)
+    pcall(function()btn1.lbl.Color=btn1.defCol end)
     while not chosen do
         task.wait(0.016)
         local mx,my=_ms.X,_ms.Y
